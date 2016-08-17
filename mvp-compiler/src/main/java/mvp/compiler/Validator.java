@@ -1,4 +1,4 @@
-package com.joincoup.app.mvp.processor;
+package mvp.compiler;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
@@ -7,6 +7,10 @@ import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
+
+import mvp.Presenter;
+import mvp.compiler.PresenterAnnotatedClass;
+import mvp.compiler.ProcessingException;
 
 public class Validator {
 

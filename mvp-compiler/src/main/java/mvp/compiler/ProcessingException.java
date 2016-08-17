@@ -1,4 +1,4 @@
-package com.joincoup.app.mvp.processor;
+package mvp.compiler;
 
 import javax.lang.model.element.Element;
 

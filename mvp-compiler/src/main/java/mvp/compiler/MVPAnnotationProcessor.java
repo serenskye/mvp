@@ -1,8 +1,7 @@
-package com.joincoup.app.mvp.processor;
+package mvp.compiler;
 
 import com.google.auto.service.AutoService;
-import com.joincoup.app.mvp.MVPView;
-import com.joincoup.app.mvp.presenter.PresenterFactory;
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
@@ -27,6 +26,9 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
+
+import mvp.Presenter;
+import mvp.compiler.PresenterAnnotatedClass;
 
 import static java.util.Collections.singleton;
 
@@ -100,15 +102,17 @@ public class MVPAnnotationProcessor extends AbstractProcessor {
       return;
     }
 
+    ClassName factory = ClassName.get("", "PresenterFactory");
     TypeSpec.Builder factoryBuilder = TypeSpec.classBuilder(FACTORY_CLASS_NAME)
         .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
         .addJavadoc("Auto generated class")
-        .addSuperinterface(PresenterFactory.class);
+        .addSuperinterface(factory);
 
+    ClassName view = ClassName.get("", "MVPView");
     MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder(FACTORY_METHOD_NAME)
         .addModifiers(Modifier.FINAL, Modifier.PUBLIC)
-        .returns(com.joincoup.app.mvp.presenter.Presenter.class)
-        .addParameter(MVPView.class, "view", Modifier.FINAL);
+        .returns(Presenter.class)
+        .addParameter(view, "view", Modifier.FINAL);
 
     for (PresenterAnnotatedClass clazz : presenterAnnotatedClasses) {
       clazz.generatePresenterConstructor(methodBuilder);

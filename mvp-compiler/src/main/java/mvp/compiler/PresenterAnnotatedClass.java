@@ -1,4 +1,4 @@
-package com.joincoup.app.mvp.processor;
+package mvp.compiler;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
