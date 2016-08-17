@@ -10,16 +10,16 @@ It's recommended that you provide access to the PresenterService via a singleton
 2. Fragments and Activities implement a child of MPPView
 
 3. Bind your Activity or Fragment to the presenter
-
- ```@Override
+```@Override
   protected void onPostCreate(@Nullable Bundle savedInstanceState) {
     super.onPostCreate(savedInstanceState);
     ViewServiceLocator.getPresenterService().takeView(this, savedInstanceState);
-  }```
+  }
+```
 
 4. Implement the interface for MVPView - you must implement setLifecycleListener, then forward lifecycle callbacks to it as follows.  I recommend putting this in an Abstract Activity class.
 
-  ```@Override
+```@Override
   public void onResume() {
     super.onResume();
     if (presenterLifecycleListener != null) {
@@ -59,12 +59,14 @@ It's recommended that you provide access to the PresenterService via a singleton
   @Override
   public void setLifecycleListener(PresenterLifecycleListener presenterLifecycleListener) {
     this.presenterLifecycleListener = presenterLifecycleListener;
-  } ```
+  } 
+```
 
   5. Create a presenter which extends AbstractPresenter of type view.  Make sure you annotate it with Presenter.  
 
-  ```@Presenter
-public class HomeViewPresenter extends AbstractPresenter<HomeView> {...```
+```@Presenter
+public class HomeViewPresenter extends AbstractPresenter<HomeView> {.....
+```
 
 6. Thats it!
   
