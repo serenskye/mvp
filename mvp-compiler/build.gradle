@@ -1,0 +1,54 @@
+apply plugin: 'java'
+
+ext {
+  bintrayRepo = 'maven'
+  bintrayName = 'mvp'
+
+  publishedGroupId = 'com.mvp'
+  libraryName = 'MVP'
+  artifact = 'mvp'
+
+  libraryDescription = 'A mvp library'
+
+  siteUrl = 'https://github.com/serenskye/mvp'
+  gitUrl = 'https://github.com/serenskye/mvp.git'
+
+  libraryVersion = '0.0.1'
+
+  developerId = 'sereskye'
+  developerName = 'Seren Matthews'
+  developerEmail = 'serenskye@gmail.com'
+
+  licenseName = 'The Apache Software License, Version 2.0'
+  licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+  allLicenses = ["Apache-2.0"]
+}
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+
+sourceCompatibility = rootProject.ext.sourceCompatibilityVersion
+targetCompatibility = rootProject.ext.targetCompatibilityVersion
+
+def logger = new com.android.build.gradle.internal.LoggerWrapper(project.logger)
+def sdkHandler = new com.android.build.gradle.internal.SdkHandler(project, logger)
+for (File file : sdkHandler.sdkLoader.repositories) {
+  repositories.maven {
+    url = file.toURI()
+  }
+}
+
+dependencies {
+  compile project(':mvp-annotations')
+  compile deps.autoservice
+  compile deps.autocommon
+  compile deps.javapoet
+  compileOnly files(org.gradle.internal.jvm.Jvm.current().getToolsJar())
+
+  testCompile deps.android
+  testCompile deps.junit
+  testCompile files(org.gradle.internal.jvm.Jvm.current().getToolsJar())
+}
+
+
+

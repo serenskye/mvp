@@ -1,0 +1,3 @@
+include ':mvp', ':mvp-annotations', ':sample', "mvp-compiler"
+
+rootProject.name = 'mvp-parent'

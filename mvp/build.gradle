@@ -1,0 +1,30 @@
+apply plugin: 'com.android.library'
+
+android {
+  compileSdkVersion rootProject.ext.compileSdkVersion
+  buildToolsVersion rootProject.ext.buildToolsVersion
+
+  defaultConfig {
+    minSdkVersion rootProject.ext.minSdkVersion
+
+    consumerProguardFiles 'proguard-rules.pro'
+  }
+
+  lintOptions {
+    textReport true
+    textOutput 'stdout'
+  }
+}
+
+dependencies {
+  compile project(':mvp-annotations')
+  compile deps.supportAnnotations
+  provided deps.supportv4
+  provided deps.rx
+  provided deps.rxcomponent
+
+
+  testCompile deps.junit
+}
+
+apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
