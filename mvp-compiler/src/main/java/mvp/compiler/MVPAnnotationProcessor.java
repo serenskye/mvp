@@ -102,16 +102,17 @@ public class MVPAnnotationProcessor extends AbstractProcessor {
       return;
     }
 
-    ClassName factory = ClassName.get("", "PresenterFactory");
+    ClassName factory = ClassName.get("mvp.presenter", "PresenterFactory");
     TypeSpec.Builder factoryBuilder = TypeSpec.classBuilder(FACTORY_CLASS_NAME)
         .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
         .addJavadoc("Auto generated class")
         .addSuperinterface(factory);
 
-    ClassName view = ClassName.get("", "MVPView");
+    ClassName view = ClassName.get("mvp", "MVPView");
+    ClassName presenter = ClassName.get("mvp.presenter", "Presenter");
     MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder(FACTORY_METHOD_NAME)
         .addModifiers(Modifier.FINAL, Modifier.PUBLIC)
-        .returns(Presenter.class)
+        .returns(presenter)
         .addParameter(view, "view", Modifier.FINAL);
 
     for (PresenterAnnotatedClass clazz : presenterAnnotatedClasses) {
