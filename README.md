@@ -1,8 +1,5 @@
-# mvp
-A small MVP framework.  
-
-# pre-setup
-It's recommended that you provide access to the PresenterService via a singleton, you can use the Application or ServiceLocator pattern. 
+# MVP
+A small MVP framework.  Wires in your MVP and create a PresenterService for your views to bind to. Presenters are provided views when bound. The PresenterService will handle unbinding views and rebinding on configuration changes.  The presenters are held in memory until your activity is destroyed to provide a more seamless experince and means you have to manage less state!  The framework uses annotation processing to minimise boilerplate.  You have to annotate your presenters and implement lifecycle callbacks.  Since you'll bind and implement the callbacks in your abstract activity or fragment you should only need to write one word (@Presenter) to wire in new views & presenters. :)
 
 # Gradle
 In your build script add
@@ -18,12 +15,15 @@ compile 'com.mvp:mvp:X.X.X'
 apt 'com.mvp:mvp-compiler:X.X.X'
 ```
 
-# how to use
+# Pre-setup
+It's recommended that you provide access to the PresenterService via a singleton, you can use the Application or ServiceLocator pattern. 
+
+# How to use
 Note you will have to run build -> rebuild project in android studio to generate the files
 
 1. Extend the interface MVPView
 
-2. Fragments and Activities implement a child of MPPView
+2. Fragments and Activities implement a child interface of MVPView
 
 3. Bind your Activity or Fragment to the presenter
 ```@Override
