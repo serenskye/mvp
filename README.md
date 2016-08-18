@@ -4,7 +4,23 @@ A small MVP framework.
 # pre-setup
 It's recommended that you provide access to the PresenterService via a singleton, you can use the Application or ServiceLocator pattern. 
 
+# Gradle
+In your build script add
+```
+    repositories {
+        maven { url 'https://dl.bintray.com/serenskye/mvp' }
+    }
+```
+
+Then in dependancies add
+```
+compile 'com.mvp:mvp:X.X.X'
+apt 'com.mvp:mvp-compiler:X.X.X'
+```
+
 # how to use
+Note you will have to run build -> rebuild project in android studio to generate the files
+
 1. Extend the interface MVPView
 
 2. Fragments and Activities implement a child of MPPView
