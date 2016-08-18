@@ -14,7 +14,6 @@ for (File file : sdkHandler.sdkLoader.repositories) {
 
 dependencies {
   compile project(':mvp-annotations')
-  compile project(':mvp')
   compile deps.autoservice
   compile deps.autocommon
   compile deps.javapoet
