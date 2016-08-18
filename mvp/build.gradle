@@ -1,4 +1,9 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+// This is the library version used when deploying the artifact
+version = "0.0.1"
 
 android {
   compileSdkVersion rootProject.ext.compileSdkVersion
@@ -16,6 +21,56 @@ android {
   }
 }
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+properties.load(project.rootProject.file('deploy.settings').newDataInputStream())
+
+
+def siteUrl =  properties.getProperty("siteUrl")     // Homepage URL of the library
+def gitUrl = properties.getProperty("gitUrl")   // Git repository URL
+def groupId = properties.getProperty("groupId")   // Git repository URL
+def devId = properties.getProperty("developerId")   // Git repository URL
+def devEmail = properties.getProperty("developerEmail")   // Git repository URL
+def devName = properties.getProperty("developerName")   // Git repository URL
+group = groupId
+
+install {
+  repositories.mavenInstaller {
+    // This generates POM.xml with proper parameters
+    pom {
+      project {
+        packaging 'aar'
+
+        // Add your description here
+        name 'A small Android MVP framework'
+        url siteUrl
+
+        // Set your license
+        licenses {
+          license {
+            name 'The Apache Software License, Version 2.0'
+            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+          }
+        }
+        developers {
+          developer {
+            id devId
+            name devName
+            email devEmail
+          }
+        }
+        scm {
+          connection gitUrl
+          developerConnection gitUrl
+          url siteUrl
+
+        }
+      }
+    }
+  }
+}
+
+
 dependencies {
   compile project(':mvp-annotations')
   compile deps.supportAnnotations
@@ -27,4 +82,38 @@ dependencies {
   testCompile deps.junit
 }
 
-apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
+task sourcesJar(type: Jar) {
+  from android.sourceSets.main.java.srcDirs
+  classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+  source = android.sourceSets.main.java.srcDirs
+  classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+  classifier = 'javadoc'
+  from javadoc.destinationDir
+}
+
+artifacts {
+  archives javadocJar
+  archives sourcesJar
+}
+
+
+bintray {
+  user = properties.getProperty("bintray.user")
+  key = properties.getProperty("bintray.apikey")
+
+  configurations = ['archives']
+  pkg {
+    repo = "mvp"
+    name = "mvp"
+    websiteUrl = siteUrl
+    vcsUrl = gitUrl
+    licenses = ["Apache-2.0"]
+    publish = true
+  }
+}
