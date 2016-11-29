@@ -67,7 +67,7 @@ public class PresenterServiceImpl implements PresenterService, PresenterServiceI
     view.setLifecycleListener(presenterLifecycleListener);
   }
 
-  public void onPresenterResumed(String id) {
+  public void onPresenterViewResumed(String id) {
     if (presenters.containsKey(id)) {
       PresenterNode node = presenters.get(id);
       if (node.isParent) {
@@ -77,10 +77,17 @@ public class PresenterServiceImpl implements PresenterService, PresenterServiceI
     }
   }
 
-  public void onPresenterPaused(String id) {
+  public void onPresenterViewPaused(String id) {
     if (presenters.containsKey(id)) {
       PresenterNode node = presenters.get(id);
       node.getPresenter().onPause();
+    }
+  }
+
+  public void onPresenterViewReady(String id) {
+    if (presenters.containsKey(id)) {
+      PresenterNode node = presenters.get(id);
+      node.getPresenter().onViewReady();
     }
   }
 

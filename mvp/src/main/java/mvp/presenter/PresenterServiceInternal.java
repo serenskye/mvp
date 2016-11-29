@@ -17,7 +17,9 @@ public interface PresenterServiceInternal {
   @Nullable
   Presenter getCurrentParent();
 
-  void onPresenterPaused(String id);
+  void onPresenterViewPaused(String id);
 
-  void onPresenterResumed(String id);
+  void onPresenterViewResumed(String id);
+
+  void onPresenterViewReady(String id);
 }

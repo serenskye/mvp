@@ -13,11 +13,16 @@ public class PresenterLifecycleListenerImpl implements PresenterLifecycleListene
   }
 
   public void onPause() {
-    presenterService.onPresenterPaused(id);
+    presenterService.onPresenterViewPaused(id);
   }
 
   public void onResume() {
-    presenterService.onPresenterResumed(id);
+    presenterService.onPresenterViewResumed(id);
+  }
+
+  @Override
+  public void onViewReady() {
+      presenterService.onPresenterViewReady(id);
   }
 
   public void onDestroy() {

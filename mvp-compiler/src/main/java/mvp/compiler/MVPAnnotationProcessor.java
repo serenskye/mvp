@@ -77,7 +77,6 @@ public class MVPAnnotationProcessor extends AbstractProcessor {
 
         // We can cast it, because we know that it of ElementKind.CLASS
         TypeElement typeElement = (TypeElement) annotatedElement;
-        System.out.println("annotated element " + typeElement.getSimpleName());
 
         PresenterAnnotatedClass annotatedClass = new PresenterAnnotatedClass(typeElement, typeUtils);
 
@@ -89,7 +88,6 @@ public class MVPAnnotationProcessor extends AbstractProcessor {
       }
     }
 
-    System.out.println("write code - MVP processor");
     writeCode();
     presenterAnnotatedClasses.clear();
 
@@ -97,7 +95,6 @@ public class MVPAnnotationProcessor extends AbstractProcessor {
   }
 
   private void writeCode() {
-    System.out.println("presenter annotated clases " + presenterAnnotatedClasses.size());
     if (presenterAnnotatedClasses.size() == 0) {
       return;
     }
